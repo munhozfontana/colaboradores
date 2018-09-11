@@ -1,24 +1,24 @@
 # Desafio Colaboradores
 
-Proposta de desafio feita pela Ecos ServiÁos de Engenharia de Sistemas Ltda
+Proposta de desafio feita pela Ecos Servi√ßos de Engenharia de Sistemas Ltda
 
 ## Ferramentas
 
 #Angular5 no front-end
-#Spring Boot no Vack-end
+#Spring Boot no Back-end
 
 #Bootstrap
 #Material Angular
 
-### Pre Requisitos
+### Pr√© Requisitos
 
 #npm
 #angular-cli
 #JDK8
 
-### InstalaÁ„o
+### Instala√ß√£o
 
-Com o npm j· instalado na m·quina, faÁa.
+Com o npm j√° instalado, fa√ßa.
 
 ```
 npm install -g @angular/cli
@@ -28,7 +28,7 @@ Entre na pasta frontend e digite:
 ```
 npm i
 ```
-ApÛs a intalaÁ„o:
+Ap√≥s a intala√ß√£o:
 
 ```
 ng serve
@@ -40,5 +40,24 @@ baixe o STS
 ```
 https://spring.io/tools/sts/all
 ```
+execute-o, e inicie a aplica√ß√£o
+
+## SCRIPTS INCIAIS
+
+INSERT INTO public.usuario(login, senha) VALUES ( 'admin', 'admin');
+
+
+INSERT INTO public.cargo(nome)	VALUES ('Analista de sistemas');
+INSERT INTO public.cargo( nome)	VALUES ('Programador Junior');
+INSERT INTO public.cargo( nome)	VALUES ('Programador pleno');
+INSERT INTO public.cargo( nome)	VALUES ('Programador Senior');
+INSERT INTO public.departamento( nome)	VALUES ( 'departamento de teste');
+INSERT INTO public.departamento( nome)	VALUES ( 'departamento de execu√ß√£o');
+INSERT INTO public.departamento( nome)	VALUES ( 'departamento de requisitos');
+INSERT INTO public.tipo_contato( nome)	VALUES ( 'Movel');
+INSERT INTO public.tipo_contato( nome)	VALUES ( 'Fixo');
+INSERT INTO public.tipo_contato( nome)	VALUES ( 'Trabalho');
+INSERT INTO public.tipo_contato( nome)	VALUES ( 'Linkedin');
+INSERT INTO public.tipo_contato( nome)	VALUES ( 'E-mail');
 
 
