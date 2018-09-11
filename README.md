@@ -2,21 +2,29 @@
 
 Proposta de desafio feita pela Ecos Serviços de Engenharia de Sistemas Ltda
 
-## Ferramentas
+## Frameworks
 
-#Angular5 no front-end
-#Spring Boot no Back-end
+Angular5 no front-end
+Spring Boot no Back-end
 
-#Bootstrap
-#Material Angular
+Bootstrap
+Material Angular
 
 ### Pré Requisitos
 
-#npm
-#angular-cli
-#JDK8
+npm
+angular-cli
+JDK8
+banco de dados PostgreSQL
 
 ### Instalação
+
+Instale o postgreSQL e crie o banco de dados chamado: colaboradores
+
+```
+https://www.postgresql.org/download/
+
+```
 
 Com o npm já instalado, faça.
 
