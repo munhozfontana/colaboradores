@@ -1,0 +1,51 @@
+<!-- TELA DA LISTA DE COLABOLADORES -->
+<section class="container">
+  <div class="row">
+    <div class="col-9 col-sm-6 col-md-12 col-lg-12">
+      <div class="card border-dark mb-3">
+        <div class="card-body text-dark">
+         <div class="row ">
+           <div class="col-6 ">
+            <h3 class="card-title">Colaboradores</h3>
+           </div>
+           <div class="col-6 ">
+              <button type="button"  [routerLink]="['novo']" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus fa-1x" arial-hidden="true">Novo</i></button>
+           </div>
+         
+         </div>
+         <div class="dropdown-divider"></div>
+          <div class="row ">
+            <div *ngFor="let colaborador of colaboradores?.content" class="cartao col-12 col-sm-12 col-md-6 col-lg-4">
+              <div class="card">
+                <img class="card-img-top" src="data:image/png;base64,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"
+                  alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{colaborador.cargo}}</h5>
+                  <p class="card-text">
+                    {{colaborador.departamento}}
+                  </p>
+                  <a class="btn btn-light" [routerLink]="['visualizar', colaborador.id]" >Detalhe</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+            <li class="page-item" [ngClass]="{'disabled' : paginaAtual === 0}">
+              <a class="page-link" (click)="getColaboradores(paginaAtual - 1)">Previous</a>
+            </li>
+
+            <li *ngFor="let pagina of paginas; let i = index" (click)="getColaboradores(i)" class="page-item"><a class="page-link">{{ i + 1}}</a></li>
+{{ paginas }}
+            <li class="page-item" [ngClass]="{'disabled' : paginaAtual === paginas.length - 1}">
+              <a class="page-link" (click)="getColaboradores(paginaAtual + 1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+body {
+    background-color: rgba(213, 242, 253, 0.877);
+}
+
+.container {
+  margin-top: 2em;
+}
+
+html, body {
+  height: 100%;
+}
+.container, .row.justify-content-center.align-items-center {
+  height: 100%;
+  min-height: 100%;
+}

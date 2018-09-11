@@ -1,0 +1,31 @@
+<!-- TELA DE LOGIN -->
+<section class="container">
+  <div class="row align-items-center justify-content-center">
+    <div class="col-9 col-sm-6 col-md-8 col-lg-6">
+      <div class="card border-dark mb-3">
+        <div class="card-header">Sistema de colaboradores</div>
+        <div class="card-body text-dark">
+          <h3 class="card-title">Entrar</h3>
+          <form #formularioLogin="ngForm" (ngSubmit)="salvarEmpresa(formularioLogin)">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Login</label>
+              <input (ngModel)="formularioLogin.login" name="login" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Login" required>
+              
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Senha</label>
+              <input (ngModel)="formularioLogin.senha" name="senha" type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha" required>
+            </div>
+          
+            <button type="submit" class="btn btn-light btn-lg btn-block">Login</button>
+            <br>
+            <small id="emailHelp" class="form-text text-center text-muted centered">Ou entre Com</small>
+            <br>
+            <button type="submit" class="btn btn-light btn-lg btn-block">facebook</button>
+            <button type="submit" class="btn btn-light btn-lg btn-block">google+</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
