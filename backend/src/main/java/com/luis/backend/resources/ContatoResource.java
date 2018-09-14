@@ -40,8 +40,8 @@ public class ContatoResource {
 	@RequestMapping(value = "/tipo", method = RequestMethod.GET)
 	public ResponseEntity<List<TipoContato>> find() {
 		List<TipoContato> list = service.findAllTipos();
-//		List<ContatoDTO> lisDto = list.stream().map(obj ->  new ContatoDTO(obj.getTipoContato().getId(), obj.getContato())
-//				).collect(Collectors.toList());
+		List<ContatoDTO> lisDto = list.stream().map(obj ->  new ContatoDTO(obj.getId(), obj.getNome())
+				).collect(Collectors.toList());
 		return ResponseEntity.ok().body(list);
 	}
 	
