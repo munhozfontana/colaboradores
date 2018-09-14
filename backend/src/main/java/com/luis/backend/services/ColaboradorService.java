@@ -30,6 +30,7 @@ public class ColaboradorService {
 	@Autowired
 	private EnderecoRepository enderecoRepo;
 
+
 	public List<Colaborador> findAll() {
 		return colaboradorRepo.findAll();
 	}
@@ -42,12 +43,18 @@ public class ColaboradorService {
 	@Transactional
 	public Colaborador insert(Colaborador obj) {
 		this.endereco = enderecoRepo.save(obj.getEndereco());
+		System.out.println(this.endereco);
+		System.out.println(this.endereco);
+		System.out.println(this.endereco);
+		System.out.println(this.endereco);
+		System.out.println(this.endereco);
 		obj.getEndereco().setId(this.endereco.getId());
 		return obj = colaboradorRepo.save(obj);
 	}
 
 	@Transactional
 	public Colaborador update(Colaborador obj) {
+		enderecoRepo.save(obj.getEndereco());
 		Colaborador newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return colaboradorRepo.save(newObj);
@@ -55,14 +62,16 @@ public class ColaboradorService {
 	
 	@Transactional
 	public void delete(Integer id) {
-		 colaboradorRepo.deleteById(id);
+		enderecoRepo.deleteById(id);
 	}
+	
+	
 
 	public Colaborador fromDTO(ColaboradorNewDTO objDto) {
 		Endereco end = new Endereco(null, objDto.getEndereco(), objDto.getLatitude(), objDto.getLongitude(), null);
-		Usuario usu = new Usuario(objDto.getUsuario_id(), null, null, null);
-		Departamento dep = new Departamento(objDto.getDepartamento_id(), null, null);
-		Cargo car = new Cargo(objDto.getCargo_id(), null, null);
+		Usuario usu = new Usuario(objDto.getUsuario_id(), null, null);
+		Departamento dep = new Departamento(objDto.getDepartamento_id(), null);
+		Cargo car = new Cargo(objDto.getCargo_id(), null);
 
 		Colaborador col = new Colaborador(null, objDto.getNome(), objDto.getDescricao(), objDto.getFoto(), end, usu, dep, car);
 		return col;
@@ -79,8 +88,6 @@ public class ColaboradorService {
 		newObj.setNome(obj.getNome());
 		newObj.getEndereco().setLatitude((obj.getEndereco().getLatitude()));
 		newObj.getEndereco().setLongitude((obj.getEndereco().getLongitude()));
-//		newObj.set
-//		newObj.set
 		
 	}
 }

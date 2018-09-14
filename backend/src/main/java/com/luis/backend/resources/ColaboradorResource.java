@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +22,13 @@ import com.luis.backend.dto.ColaboradorDTO;
 import com.luis.backend.dto.ColaboradorNewDTO;
 import com.luis.backend.services.ColaboradorService;
 
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
+
 @RestController
 @RequestMapping(value = "/colaborador")
+@Log4j2
 public class ColaboradorResource {
 
 	@Autowired
@@ -44,8 +48,7 @@ public class ColaboradorResource {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ColaboradorDTO>> findAll() {
 		List<Colaborador> list = service.findAll();
-		List<ColaboradorDTO> lisDto = list.stream()
-				.map(obj -> new ColaboradorDTO(obj.getId(), obj.getNome(), obj.getDescricao(), obj.getFoto(),
+		List<ColaboradorDTO> lisDto = list.stream().map(obj -> new ColaboradorDTO(obj.getId(), obj.getNome(), obj.getDescricao(), obj.getFoto(),
 						obj.getEndereco().getEndereco(), obj.getDepartamento().getNome(), obj.getCargo().getNome(),
 						obj.getEndereco().getLatitude(), obj.getEndereco().getLongitude()))
 				.collect(Collectors.toList());
@@ -73,6 +76,7 @@ public class ColaboradorResource {
 	public ResponseEntity<Void> update(@Valid @RequestBody ColaboradorNewDTO objDto, @PathVariable Integer id) {
 		Colaborador obj = service.fromDTO(objDto);
 		obj.setId(id);
+		obj.getEndereco().setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}

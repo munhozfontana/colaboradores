@@ -32,7 +32,6 @@ export class EditarAdicionarComponent implements OnInit {
   endereco: any;
   params: any;
   tipoContato: any;
-
   lngMarker: Number;
   latMarker: Number;
   lat = -15.0000;
@@ -48,6 +47,9 @@ export class EditarAdicionarComponent implements OnInit {
 
   departamentoAP: any;
   colaborador: any;
+  enderecoGoogle: any;
+
+
 
   constructor(
     private colaboradoresService: ColaboradoresService,
@@ -63,6 +65,7 @@ export class EditarAdicionarComponent implements OnInit {
     this.getDepartamentos();
     this.getCargos();
     this.getCompetenciasAll();
+
   }
 
   // função para cadastrar e salvar o colaborador
@@ -70,10 +73,13 @@ export class EditarAdicionarComponent implements OnInit {
     if (formularioColaborador.status !== 'INVALID' && this.endereco.coords.lat) {
       formularioColaborador = this.tratamentoForm(formularioColaborador);
       if (!this.params.id) {
+        console.log(formularioColaborador.value);
+
         this.colaboradoresService.postColaboradores(formularioColaborador.value).subscribe(
           res => {
             console.log(res);
             formularioColaborador.reset();
+            this.router.navigate(['/colaborador']);
           },
           error => {
             console.log(error);
@@ -96,20 +102,34 @@ export class EditarAdicionarComponent implements OnInit {
   }
 
   tratamentoForm(form) {
-    form.value.latitude = this.endereco.coords.lat;
-    form.value.longitude = this.endereco.coords.lng;
-    form.value.cargo_id = form.value.cargo.id;
-    form.value.departamento_id = form.value.departamento.id;
-    form.value.endereco = 'não implementado';
-    form.value.usuario_id = localStorage.getItem('usuario');
-    delete form.value.competencias;
-    delete form.value.cargo;
-    delete form.value.departamento;
+
+    this.colaboradoresService.getGeocoding(this.endereco.coords.lat, this.endereco.coords.lng).subscribe(
+      res => {
+        this.enderecoGoogle = res;
+        form.value.latitude = this.endereco.coords.lat;
+        form.value.longitude = this.endereco.coords.lng;
+        form.value.cargo_id = form.value.cargo.id;
+        form.value.departamento_id = form.value.departamento.id;
+        form.value.foto = 1;
+        form.value.usuario_id = localStorage.getItem('usuario');
+        delete form.value.competencias;
+        delete form.value.cargo;
+        delete form.value.departamento;
+
+        if (this.enderecoGoogle.error_message) {
+          return form.value.endereco = this.enderecoGoogle.status;
+        } else {
+          return form.value.endereco = this.enderecoGoogle.results[0].formatted_address;
+        }
+      }
+    );
+
     return form;
+
   }
 
   salvarContato(contato) {
-    
+
   }
 
   location(value) {
@@ -147,6 +167,7 @@ export class EditarAdicionarComponent implements OnInit {
   getCargos() {
     this.colaboradoresService.getCargos().subscribe(
       res => {
+        console.log(res);
         this.cargos = res;
       }
     );

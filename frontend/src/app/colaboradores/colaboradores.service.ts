@@ -67,5 +67,9 @@ export class ColaboradoresService {
     return this.http.get(`${API}competencia`);
   }
 
+  getGeocoding(lat, lng) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyDhuOka4HYKv-TW8vk6ggeM_kEz640rVi8`);
+  }
 
 }

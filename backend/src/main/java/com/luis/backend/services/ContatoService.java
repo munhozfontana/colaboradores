@@ -44,8 +44,8 @@ public class ContatoService {
 	}
 
 	public Contato FromDTO(ContatoNewDTO objDto) {
-		TipoContato tipo = new TipoContato(objDto.getTipoContato(), null);
-		Colaborador col = new Colaborador(objDto.getColaborador(), null, null, null, null, null, null, null);
+		TipoContato tipo = new TipoContato();
+		Colaborador col = new Colaborador();
 		Contato con = new Contato(null, objDto.getContato(), col, tipo);
 		return con;
 	}

@@ -67,6 +67,7 @@ export class VisualisarComponent implements OnInit {
       res => {
         console.log(res);
         this.contatos = res;
+        this.router.navigate(['/colaborador']);
       }
     );
   }
