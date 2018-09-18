@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck, OnChanges, AfterContentInit, AfterContentChecked } from '@angular/core';
 import { ColaboradoresService } from '../colaboradores.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './visualisar.component.html',
   styleUrls: ['./visualisar.component.scss']
 })
-export class VisualisarComponent implements OnInit {
+export class VisualisarComponent implements OnInit, OnDestroy {
   params: any;
   colaborador: any;
   competencias: any;
@@ -15,6 +15,7 @@ export class VisualisarComponent implements OnInit {
 
   lat: number;
   lng: number;
+  map = false;
 
 
   constructor(
@@ -28,18 +29,24 @@ export class VisualisarComponent implements OnInit {
     this.getColaborador();
     this.getCompetencias();
     this.getContatos();
+    setTimeout(() => {
+      this.getCompetencias();
+    }, 500);
   }
 
   alterURL() {
     this.router.navigate(['colaborador/editar', this.params.id]);
+    this.ngOnDestroy();
   }
 
   getColaborador() {
     this.colaboradoresService.getColaborador(this.params.id).subscribe(
       res => {
         this.colaborador = res;
-        this.lat = parseFloat(this.colaborador.latitude);
-        this.lng = parseFloat(this.colaborador.longitude);
+        console.log(this.colaborador);
+        this.lat = this.colaborador.latitude;
+        this.lng = this.colaborador.longitude;
+        this.map = true;
       }
     );
   }
@@ -47,11 +54,11 @@ export class VisualisarComponent implements OnInit {
   getCompetencias() {
     this.colaboradoresService.getCompetencias(this.params.id).subscribe(
       res => {
-        console.log(res);
         this.competencias = res;
       }
     );
   }
+
 
   getContatos() {
     this.colaboradoresService.getContatos(this.params.id).subscribe(
@@ -68,7 +75,13 @@ export class VisualisarComponent implements OnInit {
         console.log(res);
         this.contatos = res;
         this.router.navigate(['/colaborador']);
+        this.ngOnDestroy();
       }
     );
   }
+
+  ngOnDestroy(): void {
+
+  }
+
 }

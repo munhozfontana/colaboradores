@@ -1,14 +1,17 @@
 package com.luis.backend.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.luis.backend.domain.Colaborador;
 import com.luis.backend.domain.Competencia;
+import com.luis.backend.dto.CompetenciaDTO;
 import com.luis.backend.dto.CompetenciaNewDTO;
 import com.luis.backend.repositories.CompetenciaRepository;
 
@@ -30,15 +33,19 @@ public class CompetenciaService {
 
 	@Transactional
 	public Competencia insert(Competencia obj) {
+		competenciaRep.delete(obj);
 		return competenciaRep.save(obj);
+	}
+	
+	@Transactional
+	public void deleteCompetenciasById(Integer id) {
+		System.out.println(id);
+		competenciaRep.deleteCompetencias(id);
 	}
 
 	public Competencia FromDTO(CompetenciaNewDTO objDto) {
 		Colaborador col = new Colaborador(objDto.getColaborador(), null, null, null, null, null, null, null);
 		Competencia com = new Competencia(null, objDto.getNome(), col);
-		System.out.println(com.getNome());
-		System.out.println(objDto.getColaborador());
-		System.out.println(objDto.getId());
 		return com;
 	}
 

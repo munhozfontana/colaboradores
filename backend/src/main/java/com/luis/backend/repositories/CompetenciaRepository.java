@@ -3,6 +3,8 @@ package com.luis.backend.repositories;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +20,9 @@ public interface CompetenciaRepository extends JpaRepository<Competencia, Intege
 @Query("select p from Competencia p where colaborador_id = :id")
 public List<Competencia> findCompetenciaById(@Param("id") Integer id);
 										
-
-
+@Transactional
+@Modifying
+@Query("DELETE Competencia c WHERE colaborador_id = :id")
+public void deleteCompetencias(@Param("id") Integer id);
 
 }

@@ -10,12 +10,13 @@ import lombok.Data;
 public class ColaboradorNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private String id;
 	private String nome;
-	private String descricao;
+	private String bibliografia;
 	private Byte foto;
 	private String endereco;
-	private String latitude;
-	private String longitude;
+	private Float latitude;
+	private Float longitude;
 
 	private Integer endereco_id;
 	private Integer usuario_id;

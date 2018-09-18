@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 body {
-    background-color: rgba(213, 242, 253, 0.877);
+  background-color: rgba(213, 242, 253, 0.877);
 }
 
 .container {
@@ -15,3 +14,5 @@ html, body {
   height: 100%;
   min-height: 100%;
 }
+
+@import "~@ng-select/ng-select/themes/default.theme.css";

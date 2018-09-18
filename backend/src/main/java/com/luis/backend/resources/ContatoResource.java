@@ -21,7 +21,7 @@ import com.luis.backend.services.ContatoService;
 
 
 @RestController
-@RequestMapping(value = "/contato")
+@RequestMapping(value = "/contatos")
 public class ContatoResource {
 
 	@Autowired
@@ -35,17 +35,24 @@ public class ContatoResource {
 				).collect(Collectors.toList());
 		return ResponseEntity.ok().body(lisDto);
 	}
+
+	// Método para remover todos os contatos de um colaborador
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<List<ContatoDTO>> delete(@PathVariable Integer id) {
+		service.deleteContatosById(id);
+		return ResponseEntity.ok().build();
+	}
 	
 	// Método para listar todas os tipos de contatos
 	@RequestMapping(value = "/tipo", method = RequestMethod.GET)
-	public ResponseEntity<List<TipoContato>> find() {
+	public ResponseEntity<List<ContatoDTO>> find() {
 		List<TipoContato> list = service.findAllTipos();
-		List<ContatoDTO> lisDto = list.stream().map(obj ->  new ContatoDTO(obj.getId(), obj.getNome())
+		List<ContatoDTO> listDto = list.stream().map(obj ->  new ContatoDTO(obj.getId(), obj.getNome())
 				).collect(Collectors.toList());
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.ok().body(listDto);
 	}
 	
-
+	// Método para listar cadastrar um contato
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody ContatoNewDTO objDto) {
 		Contato obj = service.FromDTO(objDto);
