@@ -2,7 +2,6 @@ package com.luis.backend.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,17 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.luis.backend.domain.Colaborador;
+import com.luis.backend.dto.ColaboradorAllDTO;
 import com.luis.backend.dto.ColaboradorDTO;
 import com.luis.backend.dto.ColaboradorNewDTO;
 import com.luis.backend.services.ColaboradorService;
 
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping(value = "/colaborador")
-@Log4j2
+
 public class ColaboradorResource {
 
 	@Autowired
@@ -38,30 +35,19 @@ public class ColaboradorResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		Colaborador obj = service.find(id);
-		ColaboradorDTO objDto = new ColaboradorDTO(obj.getId(), obj.getNome(), obj.getDescricao(), obj.getFoto(),
-				obj.getEndereco().getEndereco(), obj.getDepartamento().getNome(), obj.getCargo().getNome(),
-				obj.getEndereco().getLatitude(), obj.getEndereco().getLongitude());
+		ColaboradorDTO objDto = new ColaboradorDTO(obj.getId(), obj.getNome(), obj.getBibliografia(), 
+				obj.getFoto(), obj.getDepartamento().getNome(), obj.getCargo().getNome(), obj.getEndereco().getEndereco(), obj.getEndereco().getLatitude(), obj.getEndereco().getLongitude());
 		return ResponseEntity.ok().body(objDto);
 	}
 
-	// Método para listar todos os colaboradores
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ColaboradorDTO>> findAll() {
-		List<Colaborador> list = service.findAll();
-		List<ColaboradorDTO> lisDto = list.stream().map(obj -> new ColaboradorDTO(obj.getId(), obj.getNome(), obj.getDescricao(), obj.getFoto(),
-						obj.getEndereco().getEndereco(), obj.getDepartamento().getNome(), obj.getCargo().getNome(),
-						obj.getEndereco().getLatitude(), obj.getEndereco().getLongitude()))
-				.collect(Collectors.toList());
-		return ResponseEntity.ok().body(lisDto);
-	}
 
 	// Método para cadastrar o colaborador
 	@RequestMapping( method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ColaboradorNewDTO objDto) {
+	public ResponseEntity<Integer> insert(@Valid @RequestBody ColaboradorNewDTO objDto) {
+		System.out.println(objDto.getCargo_id());
 		Colaborador obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.ok().body(obj.getId());
 	}
 	
 	// Método para remover o colaborador
@@ -75,21 +61,23 @@ public class ColaboradorResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ColaboradorNewDTO objDto, @PathVariable Integer id) {
 		Colaborador obj = service.fromDTO(objDto);
-		obj.setId(id);
-		obj.getEndereco().setId(id);
-		obj = service.update(obj);
+		obj = service.update(obj, id);
 		return ResponseEntity.noContent().build();
 	}
 
 	// Método para paginação da lista de colaboradores
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<ColaboradorDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage) {
-		Page<Colaborador> list = service.findPage(page, linesPerPage);
-		Page<ColaboradorDTO> lisDto = list.map(obj -> new ColaboradorDTO(obj.getId(), obj.getNome(), obj.getDescricao(),
-				obj.getFoto(), obj.getEndereco().getEndereco(), obj.getDepartamento().getNome(),
-				obj.getCargo().getNome(), obj.getEndereco().getLatitude(), obj.getEndereco().getLongitude()));
+	public ResponseEntity<Page<ColaboradorAllDTO>> findPage(
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "find", defaultValue = "") String find) {
+		
+		Page<Colaborador> list = service.findPage(page, linesPerPage, find);
+		Page<ColaboradorAllDTO> lisDto =  list.map(obj -> new ColaboradorAllDTO(obj.getId(), 
+				obj.getNome(), obj.getFoto(), 
+				obj.getDepartamento().getNome(), obj.getCargo().getNome()));
 		return ResponseEntity.ok().body(lisDto);
 	}
-
+	
+	
 }

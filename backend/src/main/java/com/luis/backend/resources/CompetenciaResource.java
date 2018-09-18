@@ -48,13 +48,19 @@ public class CompetenciaResource {
 	}
 	
 
-
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody CompetenciaNewDTO objDto) {
+	public ResponseEntity<Void> insert(@RequestBody CompetenciaNewDTO objDto) {
 		Competencia obj = service.FromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.deleteCompetenciasById(id);
+		return ResponseEntity.ok().build();
+	}
+	
 
 }

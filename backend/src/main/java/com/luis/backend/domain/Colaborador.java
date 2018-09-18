@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,12 +35,9 @@ public class Colaborador implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String descricao;
+	private String bibliografia;
 	private Byte foto;
 
-	@OneToOne
-	@JoinColumn(name = "endereco_id")
-	private Endereco endereco;
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
@@ -53,6 +51,10 @@ public class Colaborador implements Serializable {
 	@JoinColumn(name = "cargo_id")
 	private Cargo cargo;
 
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "colaborador")
+	@JsonIgnore
+	private Endereco endereco;
+	
 	@OneToMany(mappedBy = "colaborador")
 	@JsonIgnore
 	private final List<Competencia> competencias = new ArrayList<>();

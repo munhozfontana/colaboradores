@@ -10,10 +10,12 @@
               <h3 class="card-title">Visualizar colaborador</h3>
             </div>
             <div class="col-3">
-                <button type="submit"  (click)="removerColaborador()"  class="btn btn-primary btn-sm float-right"><i class="fa fa-trash fa-1x" arial-hidden="true">Remover</i></button>
+              <button type="submit" (click)="removerColaborador()" class="btn btn-primary btn-sm float-right"><i class="fa fa-trash fa-1x"
+                  arial-hidden="true">Remover</i></button>
             </div>
             <div class="col-3">
-                <button type="button"  (click)="alterURL()" class="btn btn-primary btn-sm float-right"><i class="fa fa-pencil fa-1x" arial-hidden="true">Editar</i></button>
+              <button type="button" (click)="alterURL()" class="btn btn-primary btn-sm float-right"><i class="fa fa-pencil fa-1x"
+                  arial-hidden="true">Editar</i></button>
             </div>
           </div>
 
@@ -25,45 +27,73 @@
                     alt="Generic placeholder image">
                 </div>
                 <div class="col-9">
-                  <h3 class="mt-0">{{ colaborador?.cargo }}</h3>
-                  <h5>{{ colaborador?.departamento }}</h5>
+                  <h3 class="mt-0">Nome: {{ colaborador?.nome }}</h3>
+                  <h5 class="mt-0">Cargo: {{ colaborador?.cargo }}</h5>
+                  <h5>Departamento: {{ colaborador?.departamento }}</h5>
                 </div>
               </div>
             </div>
           </div>
-          <div class="dropdown-divider"></div>
-          <p class="text-justify">{{ colaborador?.descricao }}</p>
-          <div class="dropdown-divider"></div>
-          <h4><span *ngFor="let competencia of competencias" class="badge badge-secondary">{{competencia.nome}}</span></h4>
+
           <div class="dropdown-divider"></div>
 
-          <div class="row">
-            <div class="col-6">
-              <div *ngFor="let contato of contatos">
-                 <p *ngIf="contato.id >= 4" class="text-left"><i class="fa fa-phone" arial-hidden="true"></i> {{ contato?.contato }} </p>
-              </div>
+          <div class="card border-dark mb-3">
+            <div class="card-header">
+              <h3>Bibliografia</h3>
             </div>
-           
-            <div class="col-6">
-              <div *ngFor="let contato of contatos">
-                <p *ngIf="contato.id <= 3" class="text-left"><i class=" fa fa-facebook-square" 
-                  [ngClass]="{'fa-facebook-square': contato.id === 1, 'fa-linkedin-square': contato.id === 2, 'fa-envelope-o': contato.id === 3}" arial-hidden="true"></i> {{ contato?.contato }} </p>
+            <div class="card-body text-dark">
+              <p class="text-justify">{{ colaborador?.bibliografia }}</p>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          <div class="card border-dark mb-3">
+            <div class="card-header">
+              <h3>Competencias</h3>
+            </div>
+            <div class="card-body text-dark">
+              <h4><span *ngFor="let competencia of competencias" class="badge badge-secondary">{{competencia.nome}}</span></h4>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          <div class="card border-dark mb-3">
+            <div class="card-header">
+              <h3>Contatos</h3>
+            </div>
+            <div class="card-body text-dark">
+
+              <div class="row">
+                <div class="col-6">
+                   <h3>Telefones</h3>
+                  <div *ngFor="let contato of contatos">
+                    <p *ngIf="contato.id >= 4" class="text-left"><i class="fa fa-phone" arial-hidden="true"></i> {{ contato?.contato
+                      }} </p>
+                  </div>
+                </div>
+                <div class="col-6">
+                   <h3>Contatos Eletronicos</h3>
+                  <div *ngFor="let contato of contatos">
+                    <p *ngIf="contato.id <= 3" class="text-left"><i class=" fa fa-facebook-square" [ngClass]="{'fa-facebook-square': contato.id === 1, 'fa-linkedin-square': contato.id === 2, 'fa-envelope-o': contato.id === 3}"
+                        arial-hidden="true"></i> {{ contato?.contato }} </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <br>
 
-         
-
-          <h3><p class="text-left"><i class="fa fa-map-marker" arial-hidden="true"></i> {{ colaborador?.endereco }} </p></h3>
-
-          <!-- this creates a google map on the page with the given lat/lng from -->
-          <!-- the component as the initial center of the map: -->
-          <agm-map [latitude]="lat" [longitude]="lng">
-            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-          </agm-map>
-
+          <div *ngIf="map">
+            <h3>
+              <p class="text-left"><i class="fa fa-map-marker" arial-hidden="true"></i> {{ colaborador?.endereco }} </p>
+            </h3>
+            <agm-map [latitude]="lat" [longitude]="lng">
+              <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            </agm-map>
+          </div>
         </div>
       </div>
     </div>

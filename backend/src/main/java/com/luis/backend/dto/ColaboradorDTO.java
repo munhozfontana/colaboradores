@@ -2,6 +2,12 @@ package com.luis.backend.dto;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.luis.backend.domain.Contato;
+import com.luis.backend.domain.Endereco;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,15 +17,11 @@ public class ColaboradorDTO {
 
 	private Integer id_colaborador;
 	private String nome;
-	private String descricao;
+	private String bibliografia;
 	private Byte foto;
-	private String endereco;
 	private String departamento;
 	private String cargo;
-	private String latitude;
-	private String longitude;
-
-
-	
-
+	private String endereco;
+	private Float latitude;
+	private Float longitude;
 }

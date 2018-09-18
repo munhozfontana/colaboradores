@@ -74,3 +74,9 @@ Execute `ng e2e` para executar os testes de ponta a ponta via [Protractor] (http
 Para obter mais ajuda sobre o Angular CLI, use `ng help` ou v� conferir o [Angular CLI README] (https://github.com/angular/angular-cli/blob/master/README.md).
 
 
+## CARGA DE DADOS
+
+ INSERT INTO public.cargo(nome)	VALUES ('Analista de sistemas'); INSERT INTO public.cargo( nome)	VALUES ('Programador Junior'); INSERT INTO public.cargo( nome)	VALUES ('Programador pleno'); INSERT INTO public.cargo( nome)	VALUES ('Programador Senior'); INSERT INTO public.departamento( nome)	VALUES ( 'departamento de teste'); INSERT INTO public.departamento( nome)	VALUES ( 'departamento de execução'); INSERT INTO public.departamento( nome)	VALUES ( 'departamento de requisitos'); INSERT INTO public.tipo_contato( nome)	VALUES ( 'Movel'); INSERT INTO public.tipo_contato( nome)	VALUES ( 'Fixo'); INSERT INTO public.tipo_contato( nome)	VALUES ( 'Trabalho'); INSERT INTO public.tipo_contato( nome) VALUES ( 'Linkedin'); INSERT INTO public.tipo_contato( nome)	VALUES ( 'E-mail');
+INSERT INTO public.tipo_contato(nome)VALUES ( 'Facebook'); 
+
+

@@ -10,6 +10,7 @@ export class ColaboradoresComponent implements OnInit {
   colaboradores: any;
   paginas = [];
   paginaAtual: number;
+  pesquisa: String;
 
   constructor(
     private colaboradoresService: ColaboradoresService
@@ -19,12 +20,24 @@ export class ColaboradoresComponent implements OnInit {
     this.getColaboradores(0);
   }
 
+
   getPage(page) {
     this.getColaboradores(page);
   }
 
+  getPesquisa(pesquisa: String) {
+    this.pesquisa = pesquisa;
+    this.servicePage(0);
+  }
+
   getColaboradores(page) {
-    this.colaboradoresService.getColaboradores(page).subscribe(
+    this.servicePage(page);
+  }
+
+
+  servicePage(page) {
+    this.colaboradoresService.getColaboradores(page, this.pesquisa)
+    .subscribe(
       res => {
         console.log(res);
         this.colaboradores = res;

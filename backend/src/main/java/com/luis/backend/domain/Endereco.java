@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Entity
 @RequiredArgsConstructor 
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "id")
 @Getter @Setter
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -30,11 +31,11 @@ public class Endereco implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String endereco;
-	private String latitude;
-	private String longitude;
+	private Float latitude;
+	private Float longitude;
 
-	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "endereco")
+	@JoinColumn(name = "colaborador_id")
+	@OneToOne
 	private Colaborador colaborador;
 
 

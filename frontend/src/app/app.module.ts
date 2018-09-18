@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app.routing.module';
 import { LoginService } from './login/login.service';
-import { MaterialModule } from './material';
 
 
 @NgModule({
@@ -26,8 +25,7 @@ import { MaterialModule } from './material';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule
+    BrowserAnimationsModule
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]

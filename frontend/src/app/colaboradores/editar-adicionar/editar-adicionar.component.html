@@ -7,13 +7,13 @@
         <div class="card-body text-dark">
           <form #formularioColaborador="ngForm" (ngSubmit)="salvarColaborador(formularioColaborador)">
             <div class="row">
-              <div class="col-6">
+              <div class="col-10">
                 <h3 class="card-title">Colaborador</h3>
               </div>
-              <div class="col-3">
-                <button type="submit"  class="btn btn-primary btn-sm float-right"><i class="fa fa-plus fa-1x" arial-hidden="true">Salvar</i></button>
+              <div class="col-2">
+                <button type="submit" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus fa-1x" arial-hidden="true">Salvar</i></button>
               </div>
-          
+
             </div>
             <div class="card border-dark mb-3">
               <div class="card-body text-dark">
@@ -24,103 +24,101 @@
                   </div>
                   <div class="col-8">
                     <h4 class="mt-0">
-                      <mat-form-field class="materialInput">
-                        <input matInput [(ngModel)]="form.nome" name="nome" placeholder="Digite o nome">
-                      </mat-form-field>
-
-                      <mat-form-field  class="materialInput">
-                        <input type="text" placeholder="Cargo" aria-label="Number" matInput [(ngModel)]="form.cargo" name="cargo" [matAutocomplete]="cargo">
-                        <mat-autocomplete  #cargo="matAutocomplete">
-                          <mat-option *ngFor="let option of cargos"  [value]="option">
-                            {{option?.nome}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
+                      <input required type="text" placeholder="Nome" class="form-control" [(ngModel)]="form.nome" name="nome">
                     </h4>
 
-                    <mat-form-field class="materialInput">
-                      <input type="text" placeholder="Departamento" aria-label="Number"  matInput [(ngModel)]="form.departamento" name="departamento"
-                        [matAutocomplete]="departamento">
-                      <mat-autocomplete #departamento="matAutocomplete">
-                        <mat-option *ngFor="let option of departamentos"  [value]="option" >
-                          {{option.nome}}
-                        </mat-option>
-                      </mat-autocomplete>
-                    </mat-form-field>
+                    <ng-select [items]="cargos" bindLabel="nome" [(ngModel)]="form.cargo" name="cargo" [loading]="peopleLoading">
+                    </ng-select>
+                    <br>
+
+                    <div class="row">
+                      <div class="col-1"><i class="fa fa-map-marker fa-2x" arial-hidden="true"></i></div>
+                      <div class="col-11">
+                        <ng-select [items]="departamentos" [(ngModel)]="form.departamento" name="departamento" bindLabel="nome" [loading]="peopleLoading">
+                        </ng-select>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
             <div class="dropdown-divider"></div>
 
-            <mat-form-field class="materialInput">
-              <textarea matInput [(ngModel)]="form.descricao" name="descricao" placeholder="Biografia"></textarea>
-            </mat-form-field>
+            <textarea type="text" placeholder="Bibliografia" class="form-control" [(ngModel)]="form.bibliografia" name="bibliografia"></textarea>
 
             <div class="dropdown-divider"></div>
 
-            <mat-form-field class="example-chip-list">
-              <mat-chip-list #chipList>
-                <mat-chip *ngFor="let competenciaTag of competenciasTags" [selectable]="selectable" [removable]="removable" (removed)="remove(competenciaTag)">
-                  {{competenciaTag.name}}
-                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-                <input [(ngModel)]="form.competencias" name="competencias" type="text" placeholder="Nome da competencia." [matAutocomplete]="competencia"
-                  [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                  (matChipInputTokenEnd)="add($event)">
-
-                <mat-autocomplete #competencia="matAutocomplete">
-                  <mat-option *ngFor="let option of competencias" [value]="option" (click)="competenciaTag(option)">
-                    {{option.nome}}
-                  </mat-option>
-                </mat-autocomplete>
-
-              </mat-chip-list>
-            </mat-form-field>
+            <ng-select [items]="competencias" bindLabel="nome" [loading]="peopleLoading" [addTag]="true" [multiple]="true" [hideSelected]="true"
+              [(ngModel)]="competencia" name="competencia" (change)="guardaCompetencia(competencia)">
+            </ng-select>
 
             <div class="dropdown-divider"></div>
 
-            <form #formContato="ngForm" (ngSubmit)="salvarContato(formContato)">
+            <h4><span *ngFor="let competencia of competenciasColaborador" class="badge badge-secondary">{{competencia.nome}}</span></h4>
+
+            <div class="dropdown-divider"></div>
+
+            <form #formContato="ngForm">
               <div class="card border-dark mb-3">
-                <div class="row">
-                  <div class="col-6">
-                    <div class="card-header">Contatos</div>
-                  </div>
-                  <div class="col-6">
-                    <button type="submit" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus fa-1x" arial-hidden="true">Novo</i></button>
-                  </div>
+
+                <div class="card-header">Contatos
+                  <button (click)="guardaContato(formContato)" class="btn btn-primary btn-sm float-right">Novo</button>
                 </div>
                 <div class="card-body text-dark">
                   <div class="row">
                     <div class="col-1">
-                      <p class="text-left"><i class="fa fa-map-marker fa-3x" arial-hidden="true"></i></p>
+                      <i 
+                      [ngClass]="{
+                      'fa-facebook-square': formContato.value.tipo === 6,
+                      'fa-linkedin-square': formContato.value.tipo === 4,
+                      'fa-envelope-o': formContato.value.tipo === 5 ,
+                      'fa-phone': formContato.value.tipo === 3 ,
+                      'fa-mobile': formContato.value.tipo === 2 ,
+                      'fa-mobile': formContato.value.tipo === 1 }" 
+                      class="fa fa-2x" arial-hidden="true"></i>
                     </div>
                     <div class="col-4">
-
-                      <mat-form-field class="materialInput">
-                        <input type="text" placeholder="Tipo" aria-label="Number" matInput (ngModel)="contato.tipo" name="tipo" [matAutocomplete]="tipo">
-                        <mat-autocomplete #tipo="matAutocomplete">
-                          <mat-option *ngFor="let option of tipoContato" [value]="option">
-                            {{option.nom}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
+                      <ng-select [searchable]="true" (ngModel)="contato.tipo" name="tipo">
+                        <ng-option  *ngFor="let option of tipoContato" [value]="option"> {{option.contato}}</ng-option>
+                      </ng-select>
+                    </div>
+                    <div class="col-6">
+                      <input required type="text" placeholder="Telefone" class="form-control" (ngModel)="contato.telefone" name="telefone">
                     </div>
                     <div class="col-1">
-                      <p class="text-left"><i class="fa fa-map-marker fa-3x" arial-hidden="true"></i></p>
+
                     </div>
-                    <div class="col-4">
-                      <mat-form-field class="materialInput">
-                        <input matInput (ngModel)="contato.telefone" name="telefone" placeholder="Contato">
-                      </mat-form-field>
+                  </div>
+                  <div *ngFor="let option of contatosPost; index as i">
+                    <div class="dropdown-divider"></div>
+                    <div class="row">
+
+                      <div class="col-1">
+                        <i [ngClass]="{
+                          'fa-facebook-square': option.tipo.id === 6,
+                          'fa-linkedin-square': option.tipo.id === 4,
+                          'fa-envelope-o': option.tipo.id === 5 ,
+                          'fa-building-o': option.tipo.id === 3 ,
+                          'fa-phone': option.tipo.id === 2 ,
+                          'fa-mobile': option.tipo.id === 1 }"  class="fa fa-2x" arial-hidden="true"></i>
+                      </div>
+                      <div class="col-4">
+                        <input required type="text" placeholder="tipo" [value]="option.tipo.contato" class="form-control" readonly>
+                      </div>
+                      <div class="col-6">
+                        <input required type="text" placeholder="contato" [value]="option.telefone" class="form-control" readonly>
+                      </div>
+                      <div class="col-1">
+                        <button (click)="removerContato(i)" class="btn btn-primary btn-sm float-right"> <i class="fa fa-close fa-1x"
+                            arial-hidden="true"></i></button>
+                      </div>
 
                     </div>
                   </div>
                 </div>
               </div>
-
             </form>
-
             <br>
             <h3>
               <p class="text-left"><i class="fa fa-map-marker" arial-hidden="true"></i> {{ colaborador?.endereco }} </p>

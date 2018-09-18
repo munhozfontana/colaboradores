@@ -20,7 +20,7 @@ public class ContatoService {
 
 	@Autowired
 	private ContatoRepository contatoRepo;
-	
+
 	@Autowired
 	private TipoContatoRepository tipoContatoRepo;
 
@@ -28,13 +28,11 @@ public class ContatoService {
 	public List<Contato> find(Integer id) {
 		return contatoRepo.findContatoById(id);
 	}
-	
+
 	@Transactional
 	public List<TipoContato> findAllTipos() {
 		return tipoContatoRepo.findAll();
 	}
-	
-	
 
 	@Transactional
 	public Contato insert(Contato obj) {
@@ -42,12 +40,20 @@ public class ContatoService {
 		obj.setId(this.contato.getId());
 		return obj = contatoRepo.save(obj);
 	}
+	
+	@Transactional
+	public void deleteContatosById(Integer id) {
+		contatoRepo.deleteContatos(id);
+	}
+
 
 	public Contato FromDTO(ContatoNewDTO objDto) {
-		TipoContato tipo = new TipoContato();
-		Colaborador col = new Colaborador();
+		TipoContato tipo = new TipoContato(objDto.getTipoContato(), null);
+		Colaborador col = new Colaborador(objDto.getColaborador(), null, null, null, null, null, null, null);
 		Contato con = new Contato(null, objDto.getContato(), col, tipo);
 		return con;
 	}
+
+
 
 }
